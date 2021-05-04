@@ -1,0 +1,20 @@
+ros-noetic-genmypy (0.3.0-1buster) buster; urgency=high
+
+  * Rename genpyi to genmypy (#35 <https://github.com/rospypi/genmypy/issues/35>)
+
+ -- Yuki Igarashi <me@bonprosoft.com>  Tue, 04 May 2021 15:00:00 -0000
+
+ros-noetic-genmypy (0.2.0-1buster) buster; urgency=high
+
+  * Generate py.typed in catkin built packages (#30 <https://github.com/rospypi/genmypy/issues/30>)
+  * Make package catkin compatible (#29 <https://github.com/rospypi/genmypy/issues/29>)
+
+ -- Yuki Igarashi <me@bonprosoft.com>  Fri, 30 Apr 2021 15:00:00 -0000
+
+ros-noetic-genmypy (0.1.0-1buster) buster; urgency=high
+
+  * Initial commit
+
+ -- Yuki Igarashi <me@bonprosoft.com>  Wed, 28 Apr 2021 15:00:00 -0000
+
+
