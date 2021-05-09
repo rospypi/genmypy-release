@@ -6,6 +6,7 @@ from genpy.generator import compute_pkg_type
 from ._compat import lru_cache
 from ._typing import TYPE_CHECKING
 from .stub_element import (
+    AliasElement,
     ClassElement,
     ClassMethodElement,
     CommentElement,
@@ -63,6 +64,11 @@ def _get_genmsg_type(first_party_package, field_type, imports):
         base_field_type, is_array, array_len = genmsg.msgs.parse_type(field_type)
         assert is_array
         # TODO: Handle array_len (use typing.Annotated?)
+
+        if base_field_type == "uint8":
+            # Special case for uint8[]
+            return "bytes"
+
         base_type = _get_genmsg_type(first_party_package, base_field_type, imports)
         return "typing.List[{}]".format(base_type)
 
@@ -159,12 +165,12 @@ def convert_message_class(first_party_package, spec, imports):
     # Add public methods
     msgclass.add(
         ClassMethodElement(
-            "serialize", "None", [ParameterElement("buff", "typing.StringIO")]
+            "serialize", "None", [ParameterElement("buff", "typing.BinaryIO")]
         )
     )
     msgclass.add(
         ClassMethodElement(
-            "deserialize", spec.short_name, [ParameterElement("str", "str")]
+            "deserialize", spec.short_name, [ParameterElement("str", "bytes")]
         )
     )
     msgclass.add(
@@ -172,7 +178,7 @@ def convert_message_class(first_party_package, spec, imports):
             "serialize_numpy",
             "None",
             [
-                ParameterElement("buff", "typing.StringIO"),
+                ParameterElement("buff", "typing.BinaryIO"),
                 ParameterElement("numpy", "types.ModuleType"),
             ],
         )
@@ -182,7 +188,7 @@ def convert_message_class(first_party_package, spec, imports):
             "deserialize_numpy",
             spec.short_name,
             [
-                ParameterElement("str", "str"),
+                ParameterElement("str", "bytes"),
                 ParameterElement("numpy", "types.ModuleType"),
             ],
         )
@@ -191,13 +197,13 @@ def convert_message_class(first_party_package, spec, imports):
     return msgclass
 
 
-def convert_service_class(spec):
-    # type: (SrvSpec) -> ClassElement
+def convert_service_class(spec, request_class, response_class):
+    # type: (SrvSpec, ClassElement, ClassElement) -> ClassElement
     srvclass = ClassElement(spec.short_name, "object")
     srvclass.add(FieldElement("_type", "str"))
     srvclass.add(FieldElement("_md5sum", "str"))
-    srvclass.add(FieldElement("_request_class", "str"))
-    srvclass.add(FieldElement("_response_class", "str"))
+    srvclass.add(AliasElement("_request_class", request_class.name))
+    srvclass.add(AliasElement("_response_class", response_class.name))
 
     return srvclass
 
