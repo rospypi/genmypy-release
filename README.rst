@@ -7,6 +7,16 @@ A Python stub generator from genmsg specs
 Installation
 ============
 
+If you use catkin and need CMake support for the ``genmypy`` generator, clone the repository and add it to your catkin workspace.
+
+.. code:: sh
+
+    cd /path/to/your/ws
+    git clone https://github.com/rospypi/genmypy.git
+
+
+If you don't need the cmake support, you can also install it from `pypi.org <https://pypi.org/>`_:
+
 .. code:: sh
 
     pip install genmypy
@@ -59,23 +69,23 @@ Examples:
 
     # Message files
     $ genmypy msg custom_msgs custom_msgs/msg/Custom.msg
-    $ genmypy msg std_msgs --out-dir out /opt/ros/melodic/share/std_msgs/msg/Header.msg
+    $ genmypy msg std_msgs --out-dir out /opt/ros/noetic/share/std_msgs/msg/Header.msg
     $ genmypy msg sensor_msgs --out-dir out \
-        -Istd_msgs:/opt/ros/melodic/share/std_msgs/msg \
-        -Isensor_msgs:/opt/ros/melodic/share/sensor_msgs/msg \
-        /opt/ros/melodic/share/sensor_msgs/msg/PointCloud2.msg
+        -Istd_msgs:/opt/ros/noetic/share/std_msgs/msg \
+        -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/msg \
+        /opt/ros/noetic/share/sensor_msgs/msg/PointCloud2.msg
 
     # Service files
     $ genmypy srv custom_msgs custom_msgs/srv/Custom.msg
     $ genmypy srv nav_msgs --out-dir out \
-        -Istd_msgs:/opt/ros/melodic/share/std_msgs/msg \
-        -Isensor_msgs:/opt/ros/melodic/share/sensor_msgs/msg \
-        /opt/ros/melodic/share/sensor_msgs/srv/SetCameraInfo.srv
+        -Istd_msgs:/opt/ros/noetic/share/std_msgs/msg \
+        -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/msg \
+        /opt/ros/noetic/share/sensor_msgs/srv/SetCameraInfo.srv
 
     # Module files
     $ genmypy module custom_msgs/msg
     $ genmypy module --module-finder py --out out \
-        /opt/ros/melodic/lib/python2.7/dist-packages/std_msgs/msg/
+        /opt/ros/noetic/lib/python2.7/dist-packages/std_msgs/msg/
 
 ``genmypy msg`` / ``genmypy srv``:
 
