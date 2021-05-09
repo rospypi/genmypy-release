@@ -1,1 +1,1 @@
-{"trim": "", "base": "efb4e36", "trimbase": "", "parent": "debian/noetic/genmypy", "previous": "74c8bfb"}
+{"base": "40cbe4c", "parent": "debian/noetic/genmypy", "previous": "0928218", "trim": "", "trimbase": ""}
